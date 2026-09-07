@@ -1,0 +1,54 @@
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+
+# OS Artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# Temporary Directories
+tmp/
+temp/
+
+# Go Backend
+backend/bin/
+backend/tmp/
+backend/audionara
+backend/server
+backend/*.exe
+backend/*.test
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Flutter Frontend & Android Builds
+*.apk
+*.aab
+*.sha256
+frontend/build/
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/pubspec.lock
+frontend/ios/Pods/
+frontend/ios/.symlinks/
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/key.properties
+frontend/*.p8
+frontend/.idea/
+frontend/*.iml
+
+# Editor & Tooling
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.agents/skills/
