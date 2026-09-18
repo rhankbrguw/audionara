@@ -1,0 +1,23 @@
+# Binaries
+bin/
+server
+audionara
+*.exe
+*.test
+
+# Environment & local secrets
+.env
+.env.local
+.env.*.local
+
+# Temporary files & uploads
+tmp/
+temp/
+uploads/*
+!uploads/.gitkeep
+
+# IDE & OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
