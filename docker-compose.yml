@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: audionara_postgres
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      POSTGRES_DB: ${DB_NAME:-audionara}
+      POSTGRES_USER: ${DB_USER:-audionara_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-my_super_secret_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-audionara_user} -d ${DB_NAME:-audionara}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - audionara_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: audionara_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - audionara_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: audionara_backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - audionara_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  audionara_network:
+    driver: bridge
